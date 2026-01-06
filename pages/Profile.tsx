@@ -16,7 +16,6 @@ import {
   MapPin,
   MessageCircle,
   MessageSquare,
-  Briefcase,
   Bell,
   ClipboardCheck,
   Truck,
@@ -71,6 +70,11 @@ const ProfilePage: React.FC = () => {
     { label: '留言反馈', icon: <MessageCircle size={22} />, color: 'text-gray-500' },
     { label: '服务协议', icon: <Info size={22} />, color: 'text-gray-500' },
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_session');
+    navigate('/login');
+  };
 
   return (
     <div className="space-y-4 pb-10">
@@ -244,7 +248,7 @@ const ProfilePage: React.FC = () => {
 
       <div className="px-4 pt-4">
         <button 
-          onClick={() => navigate('/delivery/login')}
+          onClick={handleLogout}
           className="w-full bg-white text-red-500 border border-red-50 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all"
         >
           <LogOut size={18} /> 退出登录

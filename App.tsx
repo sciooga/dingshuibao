@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { Home as HomeIcon, LayoutGrid, User as UserIcon, MessageCircle, Phone, Smartphone, ChevronLeft, Wallet, Bell } from 'lucide-react';
+import { Home as HomeIcon, LayoutGrid, User as UserIcon, MessageCircle, Phone, Smartphone, ChevronLeft, Wallet } from 'lucide-react';
 
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
@@ -15,22 +15,10 @@ import AppointmentsPage from './pages/Appointments';
 import DepositPage from './pages/Deposit';
 import UserInfoPage from './pages/UserInfo';
 
-// Delivery Pages
-import DeliveryLoginPage from './pages/delivery/DeliveryLogin';
-import DeliveryDashboard from './pages/delivery/DeliveryDashboard';
-import DeliveryOrders from './pages/delivery/DeliveryOrders';
-import DeliveryFinance from './pages/delivery/DeliveryFinance';
-import DeliveryReplenish from './pages/delivery/DeliveryReplenish';
-import DeliveryTransactions from './pages/delivery/DeliveryTransactions';
-import DeliveryNotices from './pages/delivery/DeliveryNotices';
-import DeliveryNoticeDetail from './pages/delivery/DeliveryNoticeDetail';
-
 const BottomNav: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isDelivery = location.pathname.startsWith('/delivery');
-  
   const userTabs = [
     { path: '/', label: '首页', icon: <HomeIcon size={22} /> },
     { path: '/recharge', label: '余额充值', icon: <Wallet size={22} /> },
@@ -39,23 +27,14 @@ const BottomNav: React.FC = () => {
     { path: '/profile', label: '我的', icon: <UserIcon size={22} /> },
   ];
 
-  const deliveryTabs = [
-    { path: '/delivery/orders', label: '配送', icon: <Phone size={22} /> },
-    { path: '/delivery/notices', label: '公告', icon: <Bell size={22} /> },
-    { path: '/delivery/home', label: '工作台', icon: <LayoutGrid size={22} /> },
-    { path: '/delivery/finance', label: '账目', icon: <Smartphone size={22} /> },
-  ];
-
-  const tabs = isDelivery ? deliveryTabs : userTabs;
-
-  const hideOn = ['/login', '/user-info', '/delivery/login', '/delivery/transactions'];
-  const isDetailPage = location.pathname.startsWith('/orders/') || location.pathname.startsWith('/delivery/notices/');
+  const hideOn = ['/login', '/user-info'];
+  const isDetailPage = location.pathname.startsWith('/orders/');
   
   if (hideOn.includes(location.pathname) || isDetailPage) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around items-center py-2 safe-bottom z-50">
-      {tabs.map((tab) => {
+      {userTabs.map((tab) => {
         const isActive = location.pathname === tab.path;
         return (
           <button
@@ -76,11 +55,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   // Don't show back button on main tabs
-  const showBack = !['/', '/profile', '/corporate', '/tickets', '/recharge', '/delivery/orders', '/delivery/home', '/delivery/finance', '/delivery/notices'].includes(location.pathname);
+  const showBack = !['/', '/profile', '/corporate', '/tickets', '/recharge'].includes(location.pathname);
 
   const getTitle = () => {
     if (location.pathname.startsWith('/orders/')) return '订单详情';
-    if (location.pathname.startsWith('/delivery/notices/')) return '公告详情';
     switch (location.pathname) {
       case '/': return '订水驿站';
       case '/profile': return '个人中心';
@@ -92,14 +70,6 @@ const Header: React.FC = () => {
       case '/deposit': return '押金管理';
       case '/user-info': return '个人信息管理';
       case '/login': return '用户登录';
-      // Delivery
-      case '/delivery/login': return '配送员登录';
-      case '/delivery/home': return '配送工作台';
-      case '/delivery/orders': return '配送订单';
-      case '/delivery/finance': return '我的账目';
-      case '/delivery/replenish': return '采购补货';
-      case '/delivery/transactions': return '账目明细';
-      case '/delivery/notices': return '配送公告';
       default: return '订水驿站';
     }
   };
@@ -161,16 +131,6 @@ const App: React.FC = () => {
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/deposit" element={<DepositPage />} />
             <Route path="/user-info" element={<UserInfoPage />} />
-            
-            {/* Delivery Routes */}
-            <Route path="/delivery/login" element={<DeliveryLoginPage />} />
-            <Route path="/delivery/home" element={<DeliveryDashboard />} />
-            <Route path="/delivery/orders" element={<DeliveryOrders />} />
-            <Route path="/delivery/finance" element={<DeliveryFinance />} />
-            <Route path="/delivery/replenish" element={<DeliveryReplenish />} />
-            <Route path="/delivery/transactions" element={<DeliveryTransactions />} />
-            <Route path="/delivery/notices" element={<DeliveryNotices />} />
-            <Route path="/delivery/notices/:id" element={<DeliveryNoticeDetail />} />
           </Routes>
         </main>
         <FloatingServices />

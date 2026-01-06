@@ -52,15 +52,16 @@ export interface RechargePackage {
   isRecommended?: boolean;
 }
 
+// Added DeliveryOrder interface to fix the missing export error in pages/delivery/DeliveryOrders.tsx
 export interface DeliveryOrder {
   id: string;
   customerName: string;
   customerPhone: string;
   address: string;
-  floor: string; // e.g. "5楼无电梯"
+  floor: string;
   items: { name: string; qty: number }[];
   deliveryTime: string;
   status: OrderStatus;
   commission: number;
-  source?: '平台订单' | '美团订单' | '饿了么订单';
+  source?: string;
 }

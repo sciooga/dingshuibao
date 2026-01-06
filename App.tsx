@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { Home as HomeIcon, LayoutGrid, User as UserIcon, MessageCircle, Phone, Smartphone, ChevronLeft, Wallet } from 'lucide-react';
+import { Home as HomeIcon, LayoutGrid, User as UserIcon, MessageCircle, Phone, Smartphone, ChevronLeft, Wallet, Bug, X } from 'lucide-react';
 
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
@@ -54,6 +54,8 @@ const BottomNav: React.FC = () => {
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showDebug, setShowDebug] = useState(false);
+  
   // Don't show back button on main tabs
   const showBack = !['/', '/profile', '/corporate', '/tickets', '/recharge'].includes(location.pathname);
 
@@ -74,14 +76,72 @@ const Header: React.FC = () => {
     }
   };
 
+  const debugRoutes = [
+    { path: '/', name: '首页' },
+    { path: '/login', name: '登录页' },
+    { path: '/profile', name: '个人中心' },
+    { path: '/user-info', name: '个人信息' },
+    { path: '/recharge', name: '余额充值' },
+    { path: '/tickets', name: '水票套餐' },
+    { path: '/corporate', name: '企业订水' },
+    { path: '/orders', name: '订单列表' },
+    { path: '/orders/2410210001', name: '订单详情(示例)' },
+    { path: '/appointments', name: '我的预约' },
+    { path: '/deposit', name: '押金管理' },
+  ];
+
   return (
-    <div className="sticky top-0 bg-white z-40 px-4 h-12 flex items-center justify-between border-b border-gray-50">
-      {showBack ? (
-        <button onClick={() => navigate(-1)} className="p-1"><ChevronLeft size={24} /></button>
-      ) : <div className="w-8" />}
-      <h1 className="text-lg font-bold">{getTitle()}</h1>
-      <div className="w-8" />
-    </div>
+    <>
+      <div className="sticky top-0 bg-white z-40 px-4 h-12 flex items-center justify-between border-b border-gray-50">
+        {showBack ? (
+          <button onClick={() => navigate(-1)} className="p-1"><ChevronLeft size={24} /></button>
+        ) : <div className="w-8" />}
+        <h1 className="text-lg font-bold">{getTitle()}</h1>
+        <button 
+          onClick={() => setShowDebug(true)} 
+          className="w-8 flex justify-end text-gray-300 hover:text-red-500 transition-colors"
+        >
+          <Bug size={18} />
+        </button>
+      </div>
+
+      {showDebug && (
+        <div className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl w-full max-w-sm flex flex-col shadow-2xl max-h-[70vh]">
+            <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl">
+              <div className="flex items-center gap-2">
+                <Bug size={16} className="text-red-500" />
+                <h3 className="font-bold text-gray-800">调试菜单</h3>
+              </div>
+              <button 
+                onClick={() => setShowDebug(false)} 
+                className="p-1 hover:bg-gray-200 rounded-full transition-colors"
+              >
+                <X size={20} className="text-gray-500" />
+              </button>
+            </div>
+            <div className="overflow-y-auto p-2 space-y-1">
+              <p className="px-4 py-2 text-xs text-gray-400 font-medium uppercase tracking-wider">页面导航</p>
+              {debugRoutes.map(r => (
+                <button
+                  key={r.path}
+                  onClick={() => {
+                    navigate(r.path);
+                    setShowDebug(false);
+                  }}
+                  className="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 hover:text-blue-600 text-sm font-medium flex justify-between items-center group transition-colors"
+                >
+                  <span className="text-gray-700 group-hover:text-blue-600">{r.name}</span>
+                  <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full group-hover:bg-blue-100 group-hover:text-blue-500 font-mono">
+                    {r.path}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

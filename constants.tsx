@@ -25,9 +25,30 @@ export const NAV_ITEMS = [
 ];
 
 export const MOCK_STORES: Store[] = [
-  { id: '1', name: '昆明旗舰店', address: '昆明市盘龙区北京路100号', distance: '1.2km' },
-  { id: '2', name: '翠湖分店', address: '昆明市五华区翠湖南路', distance: '3.5km' },
-  { id: '3', name: '官渡服务站', address: '昆明市官渡区春城路', distance: '5.8km' },
+  { 
+    id: '1', 
+    name: '昆明旗舰店', 
+    address: '昆明市盘龙区北京路100号', 
+    distance: '1.2km',
+    businessHours: '08:30-21:30',
+    isOpen: true
+  },
+  { 
+    id: '2', 
+    name: '翠湖分店', 
+    address: '昆明市五华区翠湖南路', 
+    distance: '3.5km',
+    businessHours: '09:00-19:00',
+    isOpen: true
+  },
+  { 
+    id: '3', 
+    name: '官渡服务站', 
+    address: '昆明市官渡区春城路', 
+    distance: '5.8km',
+    businessHours: '08:00-18:00',
+    isOpen: false
+  },
 ];
 
 export const MOCK_PRODUCTS: Product[] = [

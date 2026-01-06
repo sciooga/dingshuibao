@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Search, ChevronRight, ShoppingCart, X, ArrowLeft } from 'lucide-react';
+import { MapPin, Search, ChevronRight, ShoppingCart, X, ArrowLeft, Clock } from 'lucide-react';
 import { NAV_ITEMS, MOCK_STORES, MOCK_PRODUCTS } from '../constants';
 
 const HomePage: React.FC = () => {
@@ -15,7 +15,14 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const lastStore = localStorage.getItem('last_store');
     if (lastStore) {
-      setSelectedStore(JSON.parse(lastStore));
+      try {
+        const parsed = JSON.parse(lastStore);
+        // Sync with mock stores in case data changed
+        const currentStore = MOCK_STORES.find(s => s.id === parsed.id) || MOCK_STORES[0];
+        setSelectedStore(currentStore);
+      } catch (e) {
+        setSelectedStore(MOCK_STORES[0]);
+      }
     }
   }, []);
 
@@ -41,8 +48,15 @@ const HomePage: React.FC = () => {
           onClick={() => setShowStorePicker(true)}
         >
           <MapPin size={18} className="text-blue-500" />
-          <span className="truncate max-w-[150px]">{selectedStore.name}</span>
-          <ChevronRight size={16} />
+          <div className="flex flex-col">
+             <div className="flex items-center gap-1">
+               <span className="truncate max-w-[150px]">{selectedStore.name}</span>
+               <ChevronRight size={16} />
+             </div>
+             <span className={`text-[10px] ${selectedStore.isOpen ? 'text-green-500' : 'text-gray-400'}`}>
+               {selectedStore.isOpen ? '营业中' : '休息中'} {selectedStore.businessHours}
+             </span>
+          </div>
         </div>
         
         {/* New Search Button in the Top Right */}
@@ -54,7 +68,7 @@ const HomePage: React.FC = () => {
         </button>
       </div>
 
-      {/* Banner - Reduced height to h-20 (half of h-40) */}
+      {/* Banner */}
       <div className="w-full h-20 rounded-xl overflow-hidden relative group shadow-sm border border-gray-100">
         <img src="https://picsum.photos/800/200?random=10" alt="Banner" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-transparent flex items-center px-5">
@@ -93,7 +107,7 @@ const HomePage: React.FC = () => {
         ))}
       </div>
 
-      {/* Product Categories Filter - Updated to Tab Mode */}
+      {/* Product Categories Filter */}
       <div className="flex gap-8 overflow-x-auto hide-scrollbar border-b border-gray-100 pt-1">
         {categories.map(cat => (
           <button 
@@ -213,24 +227,53 @@ const HomePage: React.FC = () => {
       {/* Store Picker Modal */}
       {showStorePicker && (
         <div className="fixed inset-0 bg-black/50 z-[100] flex flex-col justify-end">
-          <div className="bg-white rounded-t-2xl p-6 space-y-4 max-h-[70vh] overflow-y-auto animate-in slide-in-from-bottom duration-300">
+          <div className="bg-white rounded-t-2xl p-6 space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-300">
             <div className="flex justify-between items-center border-b pb-4">
-              <h3 className="text-lg font-bold">切换门店</h3>
+              <h3 className="text-lg font-bold text-gray-900">切换门店</h3>
               <button onClick={() => setShowStorePicker(false)} className="text-gray-400 p-2"><X size={24} /></button>
             </div>
-            {MOCK_STORES.map(store => (
-              <div 
-                key={store.id}
-                onClick={() => handleStoreChange(store)}
-                className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${selectedStore.id === store.id ? 'border-blue-500 bg-blue-50' : 'border-gray-50'}`}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="font-bold">{store.name}</span>
-                  <span className="text-xs text-gray-400">{store.distance}</span>
+            <div className="space-y-3">
+              {MOCK_STORES.map(store => (
+                <div 
+                  key={store.id}
+                  onClick={() => handleStoreChange(store)}
+                  className={`p-4 rounded-xl border-2 transition-all cursor-pointer relative ${selectedStore.id === store.id ? 'border-blue-500 bg-blue-50/50' : 'border-gray-50 hover:border-gray-200'}`}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-1 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-gray-900">{store.name}</span>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${store.isOpen ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+                          {store.isOpen ? '营业中' : '休息中'}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-500 flex items-center gap-1">
+                        <MapPin size={12} className="shrink-0" />
+                        <span className="line-clamp-1">{store.address}</span>
+                      </p>
+                      <p className="text-[11px] text-gray-400 flex items-center gap-1">
+                        <Clock size={12} className="shrink-0" />
+                        <span>营业时间: {store.businessHours}</span>
+                      </p>
+                    </div>
+                    <span className="text-xs font-bold text-gray-400 ml-2 whitespace-nowrap">{store.distance}</span>
+                  </div>
+                  {selectedStore.id === store.id && (
+                    <div className="absolute top-2 right-2 text-blue-500">
+                      <div className="w-2 h-2 rounded-full bg-blue-500" />
+                    </div>
+                  )}
                 </div>
-                <p className="text-xs text-gray-500 mt-1">{store.address}</p>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="pt-2">
+               <button 
+                 onClick={() => setShowStorePicker(false)}
+                 className="w-full py-3.5 bg-gray-900 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all"
+               >
+                 确认选择
+               </button>
+            </div>
           </div>
         </div>
       )}

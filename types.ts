@@ -14,6 +14,8 @@ export interface Store {
   name: string;
   address: string;
   distance: string;
+  businessHours: string;
+  isOpen: boolean;
 }
 
 export interface Product {

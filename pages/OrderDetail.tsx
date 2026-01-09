@@ -60,17 +60,19 @@ const OrderDetailPage: React.FC = () => {
     }
   };
 
+  const isDelivering = order.status === OrderStatus.DELIVERING;
+
   return (
     <div className="bg-gray-50 min-h-full space-y-3 pb-24">
       {/* Status Header */}
-      <div className="bg-white p-6 flex items-center justify-between border-b border-gray-100">
+      <div className={`p-6 flex items-center justify-between border-b border-gray-100 transition-colors ${isDelivering ? 'bg-blue-50' : 'bg-white'}`}>
         <div>
-          <h2 className="text-xl font-black text-gray-900">{order.status}</h2>
-          <p className="text-xs text-gray-400 mt-1">
-            {order.status === OrderStatus.DELIVERING ? '配送员正在快马加鞭赶往您的地址' : '感谢您的支持，欢迎再次光临'}
+          <h2 className={`text-xl font-black ${isDelivering ? 'text-blue-900' : 'text-gray-900'}`}>{order.status}</h2>
+          <p className={`text-xs mt-1 ${isDelivering ? 'text-blue-600/80' : 'text-gray-400'}`}>
+            {isDelivering ? '配送员正在快马加鞭赶往您的地址' : '感谢您的支持，欢迎再次光临'}
           </p>
         </div>
-        <div className="bg-blue-50 p-3 rounded-full">
+        <div className={`p-3 rounded-full ${isDelivering ? 'bg-white shadow-sm' : 'bg-blue-50'}`}>
           {getStatusIcon(order.status)}
         </div>
       </div>

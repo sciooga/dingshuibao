@@ -60,6 +60,75 @@ export const MOCK_PRODUCTS: Product[] = [
   { id: 'p6', name: '简易压水器', category: '压水器', price: 15, unit: '个', image: 'https://picsum.photos/200/200?random=6' },
 ];
 
+export const CORPORATE_PRODUCTS: Product[] = [
+    {
+      id: 'c1',
+      name: '农夫山泉 19L (企业月结版)',
+      desc: '单次起订10桶',
+      price: 20,
+      originalPrice: 28,
+      image: 'https://picsum.photos/200/200?random=2',
+      tag: '含税专票',
+      category: '桶装水',
+      unit: '桶'
+    },
+    {
+      id: 'c2',
+      name: '珍茗金龙水 18.9L (50桶套餐)',
+      desc: '赠送立式温热饮水机',
+      price: 900,
+      originalPrice: 1200,
+      image: 'https://picsum.photos/200/200?random=1',
+      tag: '送饮水机',
+      category: '水票套餐',
+      unit: '套'
+    },
+    {
+      id: 'c3',
+      name: '高端立式冰热饮水机',
+      desc: '制冷/制热/常温',
+      price: 388,
+      originalPrice: 599,
+      image: 'https://picsum.photos/200/200?random=6',
+      tag: '以租代售',
+      category: '办公设备',
+      unit: '台'
+    },
+    {
+      id: 'c4',
+      name: '商务待客小瓶水 350ml*24',
+      desc: '会议专用 20箱起',
+      price: 35,
+      originalPrice: 48,
+      image: 'https://picsum.photos/200/200?random=4',
+      tag: '整箱批发',
+      category: '瓶装水',
+      unit: '箱'
+    },
+     {
+      id: 'c5',
+      name: '百岁山 18.9L (100桶年卡)',
+      desc: '赠茶吧机+纸杯',
+      price: 2200,
+      originalPrice: 2800,
+      image: 'https://picsum.photos/200/200?random=16',
+      tag: '年度爆款',
+      category: '水票套餐',
+      unit: '套'
+    },
+    {
+      id: 'c6',
+      name: '雀巢咖啡 268ml*15瓶',
+      desc: '提神醒脑',
+      price: 65,
+      originalPrice: 80,
+      image: 'https://picsum.photos/200/200?random=8',
+      tag: '下午茶',
+      category: '饮料',
+      unit: '箱'
+    }
+];
+
 export const MOCK_TICKETS: Product[] = [
   { 
     id: 't1', 

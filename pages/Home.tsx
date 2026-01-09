@@ -107,6 +107,19 @@ const HomePage: React.FC = () => {
         ))}
       </div>
 
+      {/* Secondary Ad Slot (Below Grid Nav) */}
+      <div className="w-full h-24 rounded-xl overflow-hidden relative shadow-sm border border-gray-100 cursor-pointer active:scale-[0.98] transition-transform">
+        <img src="https://picsum.photos/800/240?random=88" alt="Special Offer" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-transparent pointer-events-none" />
+        <div className="absolute bottom-3 left-3 text-white drop-shadow-md">
+           <h3 className="font-bold text-sm">新人专享好礼</h3>
+           <p className="text-[10px] opacity-90">首单满30减10元</p>
+        </div>
+        <span className="absolute top-0 right-0 bg-black/20 text-white text-[9px] px-2 py-0.5 rounded-bl-lg backdrop-blur-sm">
+          广告
+        </span>
+      </div>
+
       {/* Product Categories Filter */}
       <div className="flex gap-8 overflow-x-auto hide-scrollbar border-b border-gray-100 pt-1">
         {categories.map(cat => (
@@ -128,7 +141,11 @@ const HomePage: React.FC = () => {
       {/* Product List */}
       <div className="grid grid-cols-2 gap-4 pb-4">
         {filteredProducts.length > 0 ? filteredProducts.map(p => (
-          <div key={p.id} className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-gray-50 hover:shadow-md transition-shadow">
+          <div 
+            key={p.id} 
+            className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-gray-50 hover:shadow-md transition-shadow cursor-pointer"
+            onClick={() => navigate(`/product/${p.id}`)}
+          >
             <img src={p.image} alt={p.name} className="w-full aspect-square object-cover" />
             <div className="p-3 space-y-2 flex-1 flex flex-col justify-between">
               <div>
@@ -201,7 +218,10 @@ const HomePage: React.FC = () => {
                     <div 
                       key={p.id} 
                       className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg"
-                      onClick={() => setShowSearchOverlay(false)}
+                      onClick={() => {
+                        setShowSearchOverlay(false);
+                        navigate(`/product/${p.id}`);
+                      }}
                     >
                       <img src={p.image} className="w-12 h-12 rounded object-cover" alt="" />
                       <div className="flex-1">

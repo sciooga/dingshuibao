@@ -14,6 +14,7 @@ import OrderDetailPage from './pages/OrderDetail';
 import AppointmentsPage from './pages/Appointments';
 import DepositPage from './pages/Deposit';
 import UserInfoPage from './pages/UserInfo';
+import ProductDetailPage from './pages/ProductDetail';
 
 const BottomNav: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +29,8 @@ const BottomNav: React.FC = () => {
   ];
 
   const hideOn = ['/login', '/user-info'];
-  const isDetailPage = location.pathname.startsWith('/orders/');
+  // Hide nav on detail pages
+  const isDetailPage = location.pathname.startsWith('/orders/') || location.pathname.startsWith('/product/');
   
   if (hideOn.includes(location.pathname) || isDetailPage) return null;
 
@@ -56,6 +58,9 @@ const Header: React.FC = () => {
   const location = useLocation();
   const [showDebug, setShowDebug] = useState(false);
   
+  // Don't show header on product detail page (it has its own)
+  if (location.pathname.startsWith('/product/')) return null;
+
   // Don't show back button on main tabs
   const showBack = !['/', '/profile', '/corporate', '/tickets', '/recharge'].includes(location.pathname);
 
@@ -149,7 +154,8 @@ const FloatingServices: React.FC = () => {
   const [show, setShow] = useState(false);
   const location = useLocation();
 
-  if (!['/', '/profile', '/recharge'].includes(location.pathname)) return null;
+  // Hide floating services on detail pages too
+  if (location.pathname.startsWith('/product/') || !['/', '/profile', '/recharge'].includes(location.pathname)) return null;
   
   return (
     <div className="fixed right-4 bottom-24 flex flex-col gap-3 z-40">
@@ -188,6 +194,7 @@ const App: React.FC = () => {
             <Route path="/corporate" element={<CorporatePage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/orders/:id" element={<OrderDetailPage />} />
+            <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/deposit" element={<DepositPage />} />
             <Route path="/user-info" element={<UserInfoPage />} />

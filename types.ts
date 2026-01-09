@@ -29,6 +29,8 @@ export interface Product {
   isPackage?: boolean;
   savings?: number;
   packageDetail?: string; // e.g. "共23桶", "共144瓶"
+  desc?: string;
+  tag?: string;
 }
 
 export interface User {

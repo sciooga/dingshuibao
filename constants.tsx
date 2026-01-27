@@ -1,27 +1,43 @@
 
 import React from 'react';
 import { 
-  Droplets, 
-  Ticket, 
+  TicketPercent, 
   Wallet, 
   Refrigerator, 
-  Briefcase, 
-  Cpu, 
-  Gift, 
-  Zap,
-  Coffee
+  Zap, 
+  ShieldCheck, 
+  GlassWater,
+  CupSoda
 } from 'lucide-react';
 import { Product, RechargePackage, Store } from './types';
 
+// 自定义桶装水图标
+const WaterBarrelIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M15 2H9a1 1 0 0 0-1 1v2c0 .6-.4 1-1 1H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-2c-.6 0-1-.4-1-1V3a1 1 0 0 0-1-1Z" />
+    <path d="M3 12h18" />
+    <path d="M3 17h18" />
+  </svg>
+);
+
 export const NAV_ITEMS = [
-  { id: '1', label: '桶装水', icon: <Droplets className="w-6 h-6 text-blue-500" />, category: '桶装水' },
-  { id: '2', label: '免押金', icon: <Gift className="w-6 h-6 text-orange-500" />, category: '免押金' },
-  { id: '3', label: '瓶装水', icon: <Droplets className="w-6 h-6 text-cyan-500" />, category: '瓶装水' },
-  { id: '4', label: '水票套餐', icon: <Ticket className="w-6 h-6 text-red-500" />, category: '水票套餐' },
-  { id: '5', label: '余额充值', icon: <Wallet className="w-6 h-6 text-green-500" />, category: '余额充值' },
+  { id: '1', label: '桶装水', icon: <WaterBarrelIcon className="w-6 h-6 text-blue-600" />, category: '桶装水' },
+  { id: '2', label: '免押金', icon: <ShieldCheck className="w-6 h-6 text-emerald-500" />, category: '免押金' },
+  { id: '3', label: '瓶装水', icon: <GlassWater className="w-6 h-6 text-cyan-500" />, category: '瓶装水' },
+  { id: '4', label: '水票套餐', icon: <TicketPercent className="w-6 h-6 text-red-500" />, category: '水票套餐' },
+  { id: '5', label: '余额充值', icon: <Wallet className="w-6 h-6 text-orange-500" />, category: '余额充值' },
   { id: '6', label: '饮水机', icon: <Refrigerator className="w-6 h-6 text-indigo-500" />, category: '饮水机' },
-  { id: '7', label: '压水器', icon: <Cpu className="w-6 h-6 text-purple-500" />, category: '压水器' },
-  { id: '8', label: '饮料', icon: <Coffee className="w-6 h-6 text-pink-500" />, category: '饮料' },
+  { id: '7', label: '压水器', icon: <Zap className="w-6 h-6 text-purple-500" />, category: '压水器' },
+  { id: '8', label: '饮料', icon: <CupSoda className="w-6 h-6 text-pink-500" />, category: '饮料' },
 ];
 
 export const MOCK_STORES: Store[] = [

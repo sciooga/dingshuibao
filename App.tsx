@@ -15,6 +15,9 @@ import AppointmentsPage from './pages/Appointments';
 import DepositPage from './pages/Deposit';
 import UserInfoPage from './pages/UserInfo';
 import ProductDetailPage from './pages/ProductDetail';
+import PaymentPage from './pages/Payment';
+import MembershipPage from './pages/Membership';
+import TransactionHistoryPage from './pages/TransactionHistory';
 
 const BottomNav: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +31,7 @@ const BottomNav: React.FC = () => {
     { path: '/profile', label: '我的', icon: <UserIcon size={22} /> },
   ];
 
-  const hideOn = ['/login', '/user-info'];
+  const hideOn = ['/login', '/user-info', '/payment', '/membership', '/transaction-history'];
   // Hide nav on detail pages
   const isDetailPage = location.pathname.startsWith('/orders/') || location.pathname.startsWith('/product/');
   
@@ -58,8 +61,8 @@ const Header: React.FC = () => {
   const location = useLocation();
   const [showDebug, setShowDebug] = useState(false);
   
-  // Don't show header on product detail page (it has its own)
-  if (location.pathname.startsWith('/product/')) return null;
+  // Don't show header on product detail page or payment page (they have their own)
+  if (location.pathname.startsWith('/product/') || location.pathname === '/payment' || location.pathname === '/membership') return null;
 
   // Don't show back button on main tabs
   const showBack = !['/', '/profile', '/corporate', '/tickets', '/recharge'].includes(location.pathname);
@@ -77,6 +80,7 @@ const Header: React.FC = () => {
       case '/deposit': return '押金管理';
       case '/user-info': return '个人信息管理';
       case '/login': return '用户登录';
+      case '/transaction-history': return '交易明细';
       default: return '订水驿站';
     }
   };
@@ -85,6 +89,7 @@ const Header: React.FC = () => {
     { path: '/', name: '首页' },
     { path: '/login', name: '登录页' },
     { path: '/profile', name: '个人中心' },
+    { path: '/membership', name: '开通会员' },
     { path: '/user-info', name: '个人信息' },
     { path: '/recharge', name: '余额充值' },
     { path: '/tickets', name: '水票套餐' },
@@ -93,6 +98,7 @@ const Header: React.FC = () => {
     { path: '/orders/2410210001', name: '订单详情(示例)' },
     { path: '/appointments', name: '我的预约' },
     { path: '/deposit', name: '押金管理' },
+    { path: '/transaction-history', name: '交易明细' },
   ];
 
   return (
@@ -198,6 +204,9 @@ const App: React.FC = () => {
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/deposit" element={<DepositPage />} />
             <Route path="/user-info" element={<UserInfoPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/membership" element={<MembershipPage />} />
+            <Route path="/transaction-history" element={<TransactionHistoryPage />} />
           </Routes>
         </main>
         <FloatingServices />

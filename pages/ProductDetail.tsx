@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Share2, ShoppingCart, Minus, Plus, Heart, MessageCircle, Store, ShieldCheck } from 'lucide-react';
+import { ChevronLeft, Share2, Minus, Plus, Heart, MessageCircle, ShieldCheck } from 'lucide-react';
 import { MOCK_PRODUCTS, CORPORATE_PRODUCTS, MOCK_TICKETS } from '../constants';
 
 const ProductDetailPage: React.FC = () => {
@@ -28,6 +28,10 @@ const ProductDetailPage: React.FC = () => {
       </div>
     );
   }
+
+  const handleBuyNow = () => {
+    navigate('/payment', { state: { product, qty } });
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24 relative">
@@ -127,30 +131,17 @@ const ProductDetailPage: React.FC = () => {
 
       {/* Bottom Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-2 safe-bottom z-50 flex items-center gap-2">
-        <div className="flex items-center gap-4 px-4">
-           <button className="flex flex-col items-center gap-0.5 text-gray-500">
-             <Store size={20} />
-             <span className="text-[10px]">店铺</span>
-           </button>
+        <div className="flex items-center gap-6 px-6">
            <button className="flex flex-col items-center gap-0.5 text-gray-500">
              <MessageCircle size={20} />
              <span className="text-[10px]">客服</span>
            </button>
-           <div className="relative">
-              <button className="flex flex-col items-center gap-0.5 text-gray-500">
-                <ShoppingCart size={20} />
-                <span className="text-[10px]">购物车</span>
-              </button>
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[8px] rounded-full flex items-center justify-center font-bold border border-white">
-                1
-              </span>
-           </div>
         </div>
         <div className="flex-1 flex gap-2 h-10">
-          <button className="flex-1 bg-blue-50 text-blue-600 rounded-full font-bold text-sm active:scale-[0.98] transition-transform">
-            加入购物车
-          </button>
-          <button className="flex-1 bg-blue-600 text-white rounded-full font-bold text-sm shadow-lg shadow-blue-200 active:scale-[0.98] transition-transform">
+          <button 
+            onClick={handleBuyNow}
+            className="w-full h-full bg-blue-600 text-white rounded-full font-bold text-sm shadow-lg shadow-blue-200 active:scale-[0.98] transition-transform"
+          >
             立即购买
           </button>
         </div>

@@ -6,23 +6,27 @@ import {
   ShoppingCart,
   Phone,
   Crown,
-  Headphones,
-  Droplets,
-  Ticket,
-  Coffee
+  Headphones
 } from 'lucide-react';
-import { CORPORATE_PRODUCTS } from '../constants';
+import { CORPORATE_PRODUCTS, NAV_ITEMS } from '../constants';
 
 const CorporatePage: React.FC = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('全部');
 
+  // Reuse icons from NAV_ITEMS for consistency with Home page
   const gridItems = [
-    { label: '桶装水', icon: <Droplets className="text-blue-500" size={24} />, category: '桶装水' },
-    { label: '瓶装水', icon: <Droplets className="text-cyan-500" size={24} />, category: '瓶装水' },
-    { label: '水票套餐', icon: <Ticket className="text-red-500" size={24} />, category: '水票套餐' },
-    { label: '饮料', icon: <Coffee className="text-pink-500" size={24} />, category: '饮料' },
-  ];
+    { label: '桶装水', category: '桶装水' },
+    { label: '瓶装水', category: '瓶装水' },
+    { label: '水票套餐', category: '水票套餐' },
+    { label: '饮料', category: '饮料' },
+  ].map(item => {
+    const navItem = NAV_ITEMS.find(n => n.label === item.label);
+    return {
+      ...item,
+      icon: navItem?.icon
+    };
+  });
 
   const categories = ['全部', '桶装水', '瓶装水', '水票套餐', '饮料'];
 
@@ -57,7 +61,7 @@ const CorporatePage: React.FC = () => {
                大宗采购 · 专属折扣 · 增值税发票
              </p>
              <button className="bg-white text-blue-900 text-xs font-bold px-4 py-1.5 rounded-full self-start shadow-lg active:scale-95 transition-transform">
-               立即认证开通
+               立即咨询
              </button>
           </div>
         </div>

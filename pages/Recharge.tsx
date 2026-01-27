@@ -5,6 +5,7 @@ import { History, ShieldCheck, CheckCircle, ChevronRight } from 'lucide-react';
 import { RECHARGE_PACKAGES } from '../constants';
 
 const RechargePage: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedId, setSelectedId] = useState(RECHARGE_PACKAGES[1].id);
   const [customAmount, setCustomAmount] = useState('');
   const [agree, setAgree] = useState(true);
@@ -23,7 +24,10 @@ const RechargePage: React.FC = () => {
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="flex justify-between items-start">
           <p className="text-sm opacity-80">当前账户余额 (元)</p>
-          <button className="flex items-center gap-1 text-xs bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm active:scale-95 transition-transform">
+          <button 
+            onClick={() => navigate('/transaction-history')}
+            className="flex items-center gap-1 text-xs bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm active:scale-95 transition-transform"
+          >
             <History size={14} /> 交易明细
           </button>
         </div>

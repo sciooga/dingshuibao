@@ -139,7 +139,10 @@ const ProfilePage: React.FC = () => {
 
       {/* Membership Card */}
       <div className="px-4">
-        <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-4 rounded-xl shadow-lg relative overflow-hidden group">
+        <div 
+          onClick={() => navigate('/membership')}
+          className="bg-gradient-to-r from-gray-900 to-gray-800 p-4 rounded-xl shadow-lg relative overflow-hidden group cursor-pointer active:scale-[0.98] transition-all"
+        >
           <div className="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
             <Award size={100} />
           </div>
@@ -148,7 +151,7 @@ const ProfilePage: React.FC = () => {
               <h3 className="text-amber-400 font-bold text-sm italic">豪华会员</h3>
               <p className="text-xs opacity-70 mt-1">开通尊享 1元余额 & 9积分奖励</p>
             </div>
-            <button className="bg-amber-400 text-gray-900 px-4 py-1.5 rounded-full text-xs font-bold shadow-md active:scale-95 transition-all">
+            <button className="bg-amber-400 text-gray-900 px-4 py-1.5 rounded-full text-xs font-bold shadow-md">
               立即开通
             </button>
           </div>
